@@ -27,8 +27,8 @@ import UIKit
 class TableViewController: UITableViewController {
 
     // MARK: - Table view data source
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return 10
     }
 
@@ -44,7 +44,7 @@ class TableViewController: UITableViewController {
     }
 
     // MARK: - UITableViewDelegate
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
         self.performSegue(withIdentifier: "fromCellToViewController", sender:tableView)
@@ -52,27 +52,28 @@ class TableViewController: UITableViewController {
     }
 
     // MARK: - Navigation
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        switch segue.identifier! {
-        case "fromCellToViewController":
-            if let tableView = sender as? UITableView {
-                if let indexPath = tableView.indexPathForSelectedRow {
-                    if let controller = segue.destination as? ViewController {
-                        controller.parameter = "\(indexPath.row)"
+        if let identifier = segue.identifier {
+            switch identifier {
+            case "fromCellToViewController":
+                if let tableView = sender as? UITableView {
+                    if let indexPath = tableView.indexPathForSelectedRow {
+                        if let controller = segue.destination as? ViewController {
+                            controller.parameter = "\(indexPath.row)"
+                        }
                     }
                 }
-            }
-            break
 
-        case "fromButtonToViewController":
-            if let button = sender as? UIButton {
-                if let controller = segue.destination as? ViewController {
-                    controller.parameter = button.titleLabel?.text
+            case "fromButtonToViewController":
+                if let button = sender as? UIButton {
+                    if let controller = segue.destination as? ViewController {
+                        controller.parameter = button.titleLabel?.text
+                    }
                 }
+
+            default: break
             }
-            break
-            
-        default: break
         }
     }
 }
